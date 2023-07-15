@@ -13,6 +13,16 @@ class DishType(models.Model):
         return self.name
 
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = "name"
+
+    def __str__(self):
+        return self.name
+
+
 class Dish(models.Model):
     name = models.CharField(max_length=60)
     description = models.TextField(max_length=255)
@@ -23,9 +33,9 @@ class Dish(models.Model):
         related_name="dishes"
     )
     cooks = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dishes")
+    ingredients = models.ManyToManyField(Ingredient, related_name="dishes")
 
 
 class Cook(AbstractUser):
     class Meta:
         ordering = ["username"]
-
