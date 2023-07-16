@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Type of dish list</h1>
+  {% if dish_type_list %}
+    <ul>
+      {% for type in dish_type_list %}
+        <li>{{ type.name }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
