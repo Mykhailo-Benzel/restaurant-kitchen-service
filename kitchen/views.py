@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
 from kitchen.models import Cook, Dish, DishType, Ingredient
@@ -26,6 +27,12 @@ class IngredientListView(generic.ListView):
     model = Ingredient
     paginate_by = 5
     template_name = "kitchen/ingredient_list.html"
+
+
+class IngredientCreateView(generic.CreateView):
+    model = Ingredient
+    fields = "__all__"
+    success_url = reverse_lazy("kitchen:ingredient-list")
 
 
 class DishTypeListView(generic.ListView):
