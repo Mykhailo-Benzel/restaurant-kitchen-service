@@ -47,3 +47,8 @@ class DishTypeCreateView(generic.CreateView):
     fields = "__all__"
     template_name = "kitchen/dish_type_form.html"
     success_url = reverse_lazy("kitchen:dish-type-list")
+
+
+class DishListView(generic.ListView):
+    model = Dish
+
