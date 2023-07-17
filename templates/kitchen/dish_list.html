@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>Dish list</h1>
-  <h2><a href="#">add</a></h2>
+  <h2><a href="{% url 'kitchen:dish-create' %}">add</a></h2>
   {% if dish_list %}
     <ul>
       {% for dish in dish_list %}
