@@ -53,6 +53,10 @@ class DishListView(generic.ListView):
     model = Dish
 
 
+class DishDetailView(generic.DetailView):
+    model = Dish
+
+
 class DishCreateView(generic.CreateView):
     model = Dish
     fields = "__all__"
