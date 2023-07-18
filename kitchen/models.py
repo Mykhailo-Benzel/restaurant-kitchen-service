@@ -23,9 +23,16 @@ class Ingredient(models.Model):
         return self.name
 
 
+class Cook(AbstractUser):
+    years_of_experience = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["username"]
+
+
 class Dish(models.Model):
     name = models.CharField(max_length=60)
-    description = models.TextField(max_length=255)
+    description = models.TextField(max_length=500)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     dish_type = models.ForeignKey(
         DishType,
@@ -37,10 +44,3 @@ class Dish(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.description})"
-
-
-class Cook(AbstractUser):
-    years_of_experience = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ["username"]
