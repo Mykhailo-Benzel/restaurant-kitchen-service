@@ -43,4 +43,4 @@ class Dish(models.Model):
     ingredients = models.ManyToManyField(Ingredient, related_name="dishes")
 
     def __str__(self):
-        return f"{self.name} ({self.description})"
+        return self.name
