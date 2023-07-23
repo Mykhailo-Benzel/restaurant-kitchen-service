@@ -9,10 +9,34 @@
     <input type="submit" value="Search" class="btn btn-secondary">
   </form>
   {% if dish_type_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
       {% for type in dish_type_list %}
-        <li>{{ type.name }}</li>
+        <tr>
+          <td>
+              {{ type.id }}
+          </td>
+          <td>
+              {{ type.name }}
+          </td>
+          <td>
+              <a href="{% url 'kitchen:dish-type-update' pk=type.id %}">
+                Update
+              </a>
+            </td>
+        <td>
+              <a href="{% url 'kitchen:dish-type-delete' pk=type.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
   {% endif %}
 {% endblock %}
