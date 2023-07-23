@@ -11,10 +11,24 @@
     <input type="submit" value="Search" class="btn btn-secondary">
   </form>
   {% if ingredient_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Delete</th>
+      </tr>
+
       {% for ingredient in ingredient_list %}
-        <li>{{ ingredient.name }}</li>
+        <tr>
+          <td>
+              {{ ingredient.name }}
+          </td>
+          <td>
+              <a href="{% url 'kitchen:ingredient-delete' pk=ingredient.id %}">
+                Delete
+              </a>
+          </td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
   {% endif %}
 {% endblock %}
