@@ -23,6 +23,15 @@
         <li>{{ ingredient.name }}</li>
       {% endfor %}
     </ul>
+  {% if dish in user.dishes.all %}
+      <a href="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" id="assign" class="btn btn-danger link-to-page">
+        Delete me from this dish
+      </a>
+    {% else %}
+      <a href="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" id="assign" class="btn btn-success link-to-page">
+        Assign me to this dish
+      </a>
+    {% endif %}
   </div>
 {% endblock %}
 
