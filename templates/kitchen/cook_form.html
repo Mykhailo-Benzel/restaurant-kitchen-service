@@ -3,7 +3,7 @@
 
 {% block content %}
   <h1>
-    Create cook
+    {{ object|yesno:"Update,Create" }} Cook
   </h1>
 
   <form action="" method="post" novalidate>

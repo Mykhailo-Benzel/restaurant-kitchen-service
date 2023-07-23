@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from kitchen.forms import DishTypeForm, DishForm, CookCreationForm, IngredientSearchForm, DishTypeSearchForm, \
+from kitchen.forms import DishTypeForm, DishForm, CookForm, IngredientSearchForm, DishTypeSearchForm, \
     DishSearchForm, CookSearchForm
 from kitchen.models import Cook, Dish, DishType, Ingredient
 
@@ -196,7 +196,13 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
 
 class CookCreateView(LoginRequiredMixin, generic.CreateView):
     model = Cook
-    form_class = CookCreationForm
+    form_class = CookForm
+
+
+class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Cook
+    form_class = CookForm
+    success_url = reverse_lazy("kitchen:cook-detail")
 
 
 @login_required

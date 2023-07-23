@@ -30,7 +30,7 @@ class DishForm(forms.ModelForm):
         fields = "__all__"
 
 
-class CookCreationForm(UserCreationForm):
+class CookForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Cook
