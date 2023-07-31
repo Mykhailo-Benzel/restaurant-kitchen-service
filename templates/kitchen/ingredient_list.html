@@ -2,33 +2,48 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Ingredient List
-  <a href="{% url 'kitchen:ingredient-create' %}">Create</a>
-  </h1>
-  <form action="" method="get" class="form-inline">
-    {{ search_forms|crispy }}
-    <input type="submit" value="Search" class="btn btn-secondary">
-  </form>
-  {% if ingredient_list %}
-    <table class="table">
-      <tr>
-        <th>Name</th>
-        <th>Delete</th>
-      </tr>
+  <div class="page-header section-height-100 py-7 px-8 shadow-lg" style="background-image: url('/static/assets/img/curved-images/pexels-anna-guerrero-1765005.jpg')">
+    <div class="pt-4 px-5 border-radius-2xl section-height-85 col-lg-12 blur shadow-blur">
+      <h2>
+        Ingredients
+        <a href="{% url 'kitchen:ingredient-create' %}" class="btn bg-gradient-primary my-auto float-end shadow-lg">
+          Add ingredient
+        </a>
+      </h2>
 
-      {% for ingredient in ingredient_list %}
-        <tr>
-          <td>
-              {{ ingredient.name }}
-          </td>
-          <td>
-              <a href="{% url 'kitchen:ingredient-delete' pk=ingredient.id %}">
-                Delete
-              </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% endif %}
+      {% if ingredient_list %}
+        <form action="" method="get" class="form-inline">
+          {{ search_forms|crispy }}
+          <input type="submit" value="Search" class="btn btn-secondary">
+        </form>
+        <table class="table table-bordered table-hover shadow-lg bg-white">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Delete</th>
+          </tr>
+
+          {% for ingredien in ingredient_list %}
+            <tr>
+              <td>
+                {{ ingredien.id }}
+              </td>
+              <td>
+                {{ ingredien.name }}
+              </td>
+              <td>
+                <a href="{% url 'kitchen:ingredient-delete' pk=ingredien.id %}">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+
+      {% else %}
+          <p>There are no ingredients in the service.</p>
+      {% endif %}
+      {% include "includes/pagination.html" %}
+    </div>
+  </div>
 {% endblock %}

@@ -1,12 +1,27 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>{{ object|yesno:"Update, Create" }} dish</h1>
+  <div class="page-header section-height-100 py-7 px-12 shadow-lg" style="background-image: url('/static/assets/img/curved-images/pexels-anna-guerrero-1765005.jpg')">
+    <div class="pt-4 px-5 border-radius-2xl section-height-85 col-lg-9 blur shadow-blur">
+      <h2>
+        {{ object|yesno:"Update,Create" }} dish
+        {% if object %}
+          <a href="{% url 'kitchen:dish-detail' pk=dish.id %}" class="btn btn-secondary my-auto float-end">
+            Cancel
+          </a>
+        {% else %}
+          <a href="{% url 'kitchen:dish-list' %}" class="btn btn-secondary my-auto float-end">
+            Cancel
+          </a>
+        {% endif %}
+      </h2>
+      <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
 
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input type="submit" value="Submit">
-  </form>
+        <input type="submit" value="Submit" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
 {% endblock %}
