@@ -207,6 +207,11 @@ class CookUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("kitchen:cook-detail")
 
 
+class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Cook
+    success_url = reverse_lazy("kitchen:cook-list")
+
+
 @login_required
 def toggle_assign_to_dish(request, pk):
     cook = Cook.objects.get(id=request.user.id)
