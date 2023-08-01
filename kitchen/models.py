@@ -29,6 +29,9 @@ class Cook(AbstractUser):
     class Meta:
         ordering = ["username"]
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Dish(models.Model):
     name = models.CharField(max_length=60)
