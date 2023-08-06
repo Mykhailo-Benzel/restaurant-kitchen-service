@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="page-header section-height-100 py-7 px-8 shadow-lg" style="background-image: url('/static/assets/img/curved-images/stock-photo-fresh-vegetables-lying-in-row.jpg')">
+    <div class="pt-4 px-5 border-radius-2xl section-height-85 col-lg-12 blur shadow-blur">
+      <h2>
+        {{ dish.name }}
+        <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn bg-gradient-danger my-auto float-end">
+          Delete
+        </a>
+        <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary my-auto float-end">
+          Update
+        </a>
+      </h2>
+      <div class="border-radius-xl blur-section px-4 pt-3 pb-1 my-3 text-dark">
+        <p>
+          <strong>Dish Type:</strong>
+          {{ dish.dish_type }}
+        </p>
+        <p><strong>Price:</strong> {{ dish.price }}</p>
+      </div>
+      <div class="border-radius-xl blur-section px-4 pt-3 pb-1 my-3">
+        <h5>Description</h5>
+        <p>{{ dish.description }}</p>
+      </div>
+      <div class="border-radius-xl blur-section px-4 pt-3 pb-1 my-3">
+        <h5>
+          Cooks
+          {% if dish in user.dishes.all %}
+          <form action="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-danger float-end my-auto">
+              Delete me from this dish
+            </button>
+          </form>
+          {% else %}
+          <form action="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn bg-gradient-success float-end my-auto">
+              Assign me to this dish
+            </button>
+          </form>
+          {% endif %}
+        </h5>
+        <ul>
+          {% for cook in dish.cooks.all %}
+            <li><a class="text-primary text-gradient" href="{% url 'kitchen:cook-detail' pk=cook.id%}">{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }}) {% if user == cook %} (Me){% endif %}</a></li>
+          {% empty %}
+            <li>There are no cooks here.</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="border-radius-xl blur-section px-4 pt-3 pb-1 my-3">
+        <h5>
+        Ingredients
+        </h5>
+        <ul>
+          {% for ingredient in dish.ingredients.all %}
+            <li>{{ ingredient.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

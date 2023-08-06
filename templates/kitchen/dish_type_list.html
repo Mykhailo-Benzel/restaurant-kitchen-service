@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="page-header section-height-100 py-7 px-8 shadow-lg" style="background-image: url('/static/assets/img/curved-images/stock-photo-fresh-vegetables-lying-in-row.jpg')">
+    <div class="pt-4 px-5 border-radius-2xl section-height-85 col-lg-12 blur shadow-blur">
+      <h2>
+        Dish Types
+        <a href="{% url 'kitchen:dish-type-create' %}" class="btn bg-gradient-primary my-auto float-end shadow-lg">
+          Add DishType
+        </a>
+      </h2>
+
+      {% if dish_type_list %}
+        <form action="" method="get" class="form-inline">
+          {{ search_forms|crispy }}
+          <input type="submit" value="Search" class="btn btn-secondary">
+        </form>
+        <table class="table table-bordered table-hover shadow-lg bg-white">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+
+          {% for dish_type in dish_type_list %}
+            <tr>
+              <td>
+                {{ dish_type.id }}
+              </td>
+              <td>
+              {{ dish_type.name }}
+              </td>
+              <td>
+                <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}">
+                  Update
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+
+      {% else %}
+          <p>There are no dish types in the service.</p>
+      {% endif %}
+      {% include "includes/pagination.html" %}
+    </div>
+  </div>
+{% endblock %}
