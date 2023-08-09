@@ -10,26 +10,24 @@ from kitchen.forms import DishTypeForm, DishForm, CookForm, IngredientSearchForm
 from kitchen.models import Cook, Dish, DishType, Ingredient
 
 
-@login_required
-def index(request):
-    """View function for the home page of the site."""
+class IndexView(generic.TemplateView):
+    template_name = "kitchen/index.html"
 
-    num_cooks = Cook.objects.count()
-    num_dish = Dish.objects.count()
-    num_dish_types = DishType.objects.count()
-    num_ingredients = Ingredient.objects.count()
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+    def get_context_data(self, **kwargs):
 
-    context = {
-        "num_cooks": num_cooks,
-        "num_dish": num_dish,
-        "num_dish_types": num_dish_types,
-        "num_ingredients": num_ingredients,
-        "num_visits": num_visits + 1,
-    }
+        context = super().get_context_data(**kwargs)
+        context["num_dish"] = Dish.objects.count()
+        context["num_cooks"] = Cook.objects.count()
+        context["num_dish_types"] = DishType.objects.count()
+        context["num_ingredients"] = Ingredient.objects.count()
+        context['num_visits'] = self.request.session['num_visits']
 
-    return render(request, "kitchen/index.html", context=context)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        num_visits = request.session.get('num_visits', 0)
+        request.session['num_visits'] = num_visits + 1
+        return super().get(request, *args, **kwargs)
 
 
 class IngredientListView(LoginRequiredMixin, generic.ListView):
